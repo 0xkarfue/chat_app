@@ -3,16 +3,25 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/auth.routes.js'; // Adjust the path as needed
 import connectDB from './config/db.js'; // Import your database connection
 import { DB_NAME } from './constants.js'; // Import your constants
+import http from "http";
+import { setupSocketServer } from "./socket/socket.js";
+import cors from 'cors'; // Import CORS middleware
 
 // Load environment variables from .env file
 dotenv.config();
 
+
 // Initialize the Express app
 const app = express();
+const server = http.createServer(app);
+setupSocketServer(server);
+
+app.use(cors());
+
 
 // Middleware
 app.use(express.json()); // For parsing application/json
-
+app.use(express.static('public'));
 // Connect to MongoDB Atlas
 connectDB()
 	.then(() => console.log(`Connected to MongoDB Atlas - Database: ${DB_NAME}`))

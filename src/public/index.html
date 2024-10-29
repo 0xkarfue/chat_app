@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Socket.IO Test</title>
+	<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+
+<body>
+	<h1>Socket.IO Test</h1>
+	<script>
+		const socket = io("http://localhost:8000", {
+			auth: {
+				token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIwOGE1Y2Q1ODYzZWRhZjNkZDU1MDYiLCJlbWFpbCI6IkhhcnNoQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoidmluYXlhayIsImlhdCI6MTczMDE4NTgyMSwiZXhwIjoxNzMwMjcyMjIxfQ.x0_GqO4s_WUiEaw003hkNup8OSa3dG2Yq0E5NWvNUQg" // Replace with your JWT token
+			}
+		});
+
+		// Handle connection
+		socket.on("connect", () => {
+			console.log("Connected to server");
+
+			// Join a chat room
+			socket.emit("joinRoom", "ROOM_ID_HERE"); // Replace with the room ID you want to join
+
+			// Send a message
+			socket.emit("sendMessage", {
+				roomId: "ROOM_ID_HERE",
+				content: "Hello, everyone!"
+			});
+		});
+
+		// Handle incoming messages
+		socket.on("receiveMessage", (message) => {
+			console.log("Message received:", message);
+		});
+
+		// Handle errors
+		socket.on("error", (error) => {
+			console.error("Error:", error);
+		});
+
+		// Handle disconnection
+		socket.on("disconnect", () => {
+			console.log("Disconnected from server");
+		});
+	</script>
+</body>
+
+</html>

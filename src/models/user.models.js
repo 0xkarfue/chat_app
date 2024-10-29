@@ -28,7 +28,8 @@ const userSchema = new Schema({
 	},
 	userId: {
 		type: String,
-		unique: true
+		unique: true,
+		default: () => new mongoose.Types.ObjectId().toString()
 	},
 	onlineStatus: {
 		type: Boolean,

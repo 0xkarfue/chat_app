@@ -1,12 +1,12 @@
-import mongoose, { Schema } from mongoose;
+import mongoose, { Schema } from 'mongoose';
 
 const chatRoomSchema = new Schema({
 	roomId: {
-		type: Sting,
+		type: String,
 		unique: true,
 	},
 	roomName: {
-		type: Sting,
+		type: String,
 	},
 	members: {
 		type: [],
